@@ -77,6 +77,7 @@ const signIn = async (email: string, password: string): Promise<AuthResult> =>{
     }, [])
 
     const signOut = async () => {
+    // Clear local storage to remove any stale session data
     const {error } = await supabase.auth.signOut();
     console.log("Sign out successful");
     if (error) throw error;
