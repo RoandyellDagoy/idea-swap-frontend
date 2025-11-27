@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.BASE_URL;
 
 export const StatsService = {
     getStats: async () => {

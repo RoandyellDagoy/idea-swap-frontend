@@ -1,10 +1,10 @@
 import type { Idea } from "../types/Idea";
 
-const API_URL = "http://localhost:5000/ideas";
+const API_URL = import.meta.env.BASE_URL;
 
 export const IdeaService ={
     getAll : async (): Promise<Idea[]> =>{
-        const res = await fetch(API_URL);
+        const res = await fetch(API_URL + "/ideas");
         const json = await res.json();
         return json.data ?? [];
     },
