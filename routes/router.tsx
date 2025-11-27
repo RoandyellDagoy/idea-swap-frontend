@@ -5,7 +5,7 @@ import SignUp from "../src/components/SignUp";
 import LoginDashboard from "../src/pages/LoginDashboard"
 import ProtectedRoute from "./ProtectedRoute"
 import { Dashboard } from "../src/pages/Dashboard";
-import AuthCallBack from "../routes/AuthCallBack"
+import AuthCallBack from "../src/routes/AuthCallback"
 import { IdeasProvider } from "../src/context/IdeasContext";
 
 export const router = createBrowserRouter ([
