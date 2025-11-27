@@ -40,15 +40,15 @@ const SignUp = () => {
   // handle signUp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.password) {
-    alert("Please fill in all fields!");
-    return; 
+      alert("Please fill in all fields!");
+      return;
     }
 
     try {
       await signUp(formData.name, formData.email, formData.password);
-      alert("Account created! Check you email for verification. ")
+      navigate('/dashboard');
     } catch (error) {
       alert("Sign Up failed: " + (error as Error).message);
     }

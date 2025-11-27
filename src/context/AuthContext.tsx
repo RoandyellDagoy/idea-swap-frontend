@@ -6,7 +6,7 @@ import type { AuthResult } from "../types/Idea";
 interface AuthContextType {
     user: User | null;
     loading: boolean;
-    signUp: (name: string , email: string, password: string) =>Promise<{ success: boolean; error?: string }>;
+    signUp: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
     signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
     signOut: () => Promise<void>;
     signInWithGitHub: () => Promise<void>;
@@ -21,30 +21,40 @@ export const AuthProvider = ({children} : {children: React.ReactNode}) =>{
 
 
 // create a sign up function
-const signUp = async (name: string , email: string, password: string): Promise<AuthResult> =>{
-    setLoading(true);
-    try {
-      const {data , error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-            data: {full_name: name},
-            emailRedirectTo: `${window.location.origin}/auth/callback`, 
-        }
-      });
+const signUp = async (name: string, email: string, password: string): Promise<AuthResult> => {
+  setLoading(true);
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: name },
+      },
+    });
 
-      if(error) throw error;
+    if (error) throw error;
 
-      setUser(data.user?? null)
-    } catch (error) {
-        console.error("Sign Up Error: ", error);
-        throw error;
-    }finally{
-        setLoading(false);
+    if (data.user) {
+      await supabase
+        .from('user_profiles')
+        .insert([
+          {
+            id: data.user.id,
+            full_name: data.user.user_metadata?.full_name || data.user.user_metadata?.name || 'User',
+            email: data.user.email,
+          }
+        ]);
     }
 
-    return { success: true};
-}
+    setUser(data.user ?? null);
+    return { success: true };
+  } catch (error) {
+    console.error("Sign Up Error: ", error);
+    throw error;
+  } finally {
+    setLoading(false);
+  }
+};
    
 
 // sign in logic
