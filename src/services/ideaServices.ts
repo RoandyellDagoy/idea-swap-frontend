@@ -3,8 +3,8 @@ import type { Idea } from "../types/Idea";
 const API_URL = import.meta.env.VITE_BASE_URL;
 
 export const IdeaService ={
-    getAll : async (): Promise<Idea[]> =>{
-        const res = await fetch(API_URL + "/ideas");
+    getAll : async (signal?: AbortSignal): Promise<Idea[]> =>{
+        const res = await fetch(API_URL + "/ideas", { signal });
         const json = await res.json();
         return json.data ?? [];
     },

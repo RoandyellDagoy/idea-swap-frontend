@@ -56,7 +56,7 @@ export const Dashboard: React.FC = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
+    useEffect(() => {
     loadIdeas();
   }, []);
 
@@ -79,6 +79,7 @@ export const Dashboard: React.FC = () => {
         ...idea,
         user_name: idea.user_name || 'Anonymous'
       }));
+      console.log('Fetched and enriched ideas:', enrichedData);
       setIdeas(enrichedData);
     } catch (error) {
       console.error('Error loading ideas:', error);
@@ -117,6 +118,7 @@ export const Dashboard: React.FC = () => {
         idea.description.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
+    console.log('Filtered ideas:', filtered);
     setFilteredIdeas(filtered);
   };
 
