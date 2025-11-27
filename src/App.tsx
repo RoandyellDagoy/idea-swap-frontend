@@ -13,25 +13,31 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchStats = async () => {
       try {
-        const [statsData, ideasData] = await Promise.all([
-          StatsService.getStats(),
-          IdeaService.getAll(),
-        ]);
+        const statsData = await StatsService.getStats();
         setStats(statsData);
-        if (ideasData.length > 0) {
-          const randomIndex = Math.floor(Math.random() * ideasData.length);
-          setFeaturedIdea(ideasData[randomIndex]);
-        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching stats:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    const fetchIdeas = async () => {
+      try {
+        const ideasData = await IdeaService.getAll();
+        if (ideasData.length > 0) {
+          const randomIndex = Math.floor(Math.random() * ideasData.length);
+          setFeaturedIdea(ideasData[randomIndex]);
+        }
+      } catch (error) {
+        console.error("Error fetching ideas:", error);
+      }
+    };
+
+    fetchStats();
+    fetchIdeas();
   }, []);
 
   const containerVariants = {
