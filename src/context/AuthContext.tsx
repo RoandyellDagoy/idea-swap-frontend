@@ -49,7 +49,7 @@ const signUp = async (name: string , email: string, password: string): Promise<A
 
 // sign in logic
 const signIn = async (email: string, password: string): Promise<AuthResult> =>{
-    const {data, error} = await supabase.auth.signInWithPassword({email, password});
+    const {error} = await supabase.auth.signInWithPassword({email, password});
 
     if (error) {
         console.error("Sign in failed:", error.message);
