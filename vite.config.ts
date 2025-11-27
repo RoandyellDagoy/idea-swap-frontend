@@ -11,10 +11,6 @@ export default defineConfig({
     // This is the important part
     // Redirect all 404s to index.html
     // This is needed for client-side routing to work
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/.*$/, to: '/index.html' },
-      ],
-    },
+   
   },
 })
